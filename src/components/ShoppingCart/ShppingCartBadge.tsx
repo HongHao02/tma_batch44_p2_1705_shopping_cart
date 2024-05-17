@@ -41,9 +41,9 @@ const ItemCheckOut: React.FC<ItemCheckOutProps> = ({ product, onCheckOut }) => {
         onCheckOut(product, event.target.checked);
     };
     return (
-        <div className="flex items-center gap-4 h-10 border-b-slate-700">
+        <div className="flex items-center gap-4 border-b-gray-400 border-b-2 w-full h-full">
             <Checkbox checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
-            <div className="w-10 h-10">
+            <div className="w-5 flex-shrink">
                 <img src={product.image} alt={`product_${product.id}`} className="object-fill" />
             </div>
             <div>Title: {product.title}</div>
@@ -76,13 +76,15 @@ export default function CustomizedBadges() {
 
     const handleClose = () => {
         setOpen(false);
+        setCheckOutList([])
     };
 
     const handleCheckOut = () => {
+        setIsCheckOut(!isCheckOut);
         if (checkOutList.length > 0) {
-            setIsCheckOut(!isCheckOut);
+            setShowAlert(false);
         } else {
-            setShowAlert(!showAlert);
+            setShowAlert(true);
         }
     };
     return (
@@ -103,9 +105,9 @@ export default function CustomizedBadges() {
                 <DialogContent>
                     {cartStoreReducer.products.map((product, index) => {
                         return (
-                            <Paper key={index} className='max-h-[40px]'>
+                            <div key={index}>
                                 <ItemCheckOut product={product} onCheckOut={onCheckOut}></ItemCheckOut>
-                            </Paper>
+                            </div>
                         );
                     })}
                 </DialogContent>
